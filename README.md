@@ -1,0 +1,1 @@
+# ParallelHybridApp_card
