@@ -244,6 +244,42 @@ namespace ParallelHybridApp
             }
         }
 
+        private void notify_detect_to_sessions(string serial, string id)
+        {
+            foreach (var session in session_ary.Values)
+            {
+                MessageData send = new MessageData();
+
+                send.command = "detect";
+                send.message = serial + "," + id;
+                send.time = DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss");
+
+                string send_str = JsonConvert.SerializeObject(send);
+
+                session.Send(send_str);
+
+                add_log(send.time, "送信:" + send_str);
+            }
+        }
+
+        private void notify_lost_to_sessions()
+        {
+            foreach (var session in session_ary.Values)
+            {
+                MessageData send = new MessageData();
+
+                send.command = "lost";
+                send.message = "";
+                send.time = DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss");
+
+                string send_str = JsonConvert.SerializeObject(send);
+
+                session.Send(send_str);
+
+                add_log(send.time, "送信:" + send_str);
+            }
+        }
+
         private void btnSend_Click(object sender, EventArgs e)
         {
             send_message_to_sessions(this.txtSendMessage.Text);
@@ -403,16 +439,8 @@ namespace ParallelHybridApp
                     string readerSerialNumber = readReaderSerialNumber(hCard);
                     string cardId = readCardId(hCard);
 
-
-                    var message = "検出:" + _readername + " S/N:" + readerSerialNumber + " ID:" + cardId;
-
-                    send_message_to_sessions(message);
-
-                    frm.add_log(
-                        DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss"),
-                        message
-                        );
-
+                    notify_detect_to_sessions(readerSerialNumber, cardId);
+                    
                     disconnect(hCard);
 
                 }
@@ -421,14 +449,8 @@ namespace ParallelHybridApp
                 if (_prev_state_is_empty != state_is_empty &&
                     state_is_empty == NfcConstant.SCARD_STATE_EMPTY)
                 {
-                    var message = "未検出:" + _readername;
+                    notify_lost_to_sessions();
 
-                    send_message_to_sessions(message);
-
-                    frm.add_log(
-                        DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss"),
-                        message
-                        );
                 }
 
                 _prev_state_is_present = state_is_present;

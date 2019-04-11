@@ -43,6 +43,26 @@ function connectSocketServer(callback) {
 			add_message(message);
 
         }
+        else if( data["command"] == "detect"){
+
+            var spl = data["message"].split(",");
+            var serial = spl[0];
+            var id = spl[1];
+
+            $("#_card_message").text("検出");
+            $("#_card_serial").text(serial);
+            $("#_card_id").text(id);
+
+            $("#_card_message").css("color", "red");
+        }
+        else if( data["command"] == "lost"){
+
+            $("#_card_message").text("未検出");
+            $("#_card_serial").text("--");
+            $("#_card_id").text("--");
+
+            $("#_card_message").css("color", "black");
+        }
     };
 
     // when the connection is established, this method is called
@@ -147,11 +167,18 @@ $(document).ready(function(){
 </head>
 <body>
 
-    <div style="display:table;margin-top: 10px; width:600px; height:300px;">
-		
-        <div style="display:table-row;">
-			<div id="_message" style="display:table-cell; border: solid 1px gray;">
-			</div>
+    <div style="width:350px; margin:20px;display:inline-block; border: solid 2px black; border-radius: 10px; font-size: 30px; padding: 20px;">
+        <div style="margin:20px;">
+            <span>状態:</span>
+            <span id="_card_message">未検出</span>
+        </div>
+        <div style="margin:20px;">
+            <span>SN:</span>
+            <span id="_card_serial">--</span>
+        </div>
+        <div style="margin:20px;">
+            <span>ID:</span>
+            <span id="_card_id">--</span>
         </div>
     </div>
     <div style="display:table;margin-top: 10px; width:600px;">
@@ -163,10 +190,6 @@ $(document).ready(function(){
 					 onclick="connect();"/>
 				<img id="_signal_red" src="signal_red_on.png" style="width:18px; "
 					 onclick="connect();"/>
-			</div>
-			<div style="display:table-cell; text-align: right;">
-				<input type="text" id="_message_send" style="width:80%"/>
-				<input id="_button_send" type="button" value="送信" onclick="send_message();" disabled/>
 			</div>
         </div>
 
