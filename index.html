@@ -3,7 +3,7 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="utf-8" />
-    <title>ブラウザテスト</title>
+    <title>カードリーダー接続テスト</title>
 	<script
 			  src="https://code.jquery.com/jquery-1.12.4.min.js"
 			  integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ="
@@ -167,6 +167,7 @@ $(document).ready(function(){
 </head>
 <body>
 
+<div style="text-align: center;">
     <div style="width:350px; margin:20px;display:inline-block; border: solid 2px black; border-radius: 10px; font-size: 30px; padding: 20px;">
         <div style="margin:20px;">
             <span>状態:</span>
@@ -180,22 +181,17 @@ $(document).ready(function(){
             <span>ID:</span>
             <span id="_card_id">--</span>
         </div>
-    </div>
-    <div style="display:table;margin-top: 10px; width:600px;">
-		
-        <div style="display:table-row;">
-			<div style="display:table-cell; width:150px;">
-				<span style="font-size:11px;">ネイティブアプリ：</span>
-				<img id="_signal_green" src="signal_green_off.png" style="width:18px;"
-					 onclick="connect();"/>
-				<img id="_signal_red" src="signal_red_on.png" style="width:18px; "
-					 onclick="connect();"/>
-			</div>
-        </div>
-
-        <div style="display:table-row;">
+        <div style="margin:10px; margin-bottom: 0;text-align: right;">
+            <span style="font-size:12px;">
+    		カードリーダー接続：
+    		</span>
+			<img id="_signal_green" src="signal_green_off.png" style="width:18px;"
+				 onclick="connect();"/>
+			<img id="_signal_red" src="signal_red_on.png" style="width:18px; "
+				 onclick="connect();"/>
         </div>
     </div>
+</div>
 
 </body>
 </html>
