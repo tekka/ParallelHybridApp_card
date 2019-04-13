@@ -1,14 +1,13 @@
-ƒpƒ‰ƒŒƒ‹ƒnƒCƒuƒŠƒbƒhƒAƒvƒŠ FeliCaƒŠ[ƒ_[“Ç
+ãƒ‘ãƒ©ãƒ¬ãƒ«ãƒã‚¤ãƒ–ãƒªãƒƒãƒ‰ã‚¢ãƒ—ãƒª FeliCaãƒªãƒ¼ãƒ€ãƒ¼èª­è¾¼
 ===
 
-## ‚±‚ê‚Í‰½H
+## ã“ã‚Œã¯ä½•ï¼Ÿ
 
-ƒuƒ‰ƒEƒU‚ÅFeliCaƒŠ[ƒ_[‚ÉÚ‘±‚µAƒJ[ƒhî•ñ‚ğæ“¾‚µ‚Ü‚·B
-()
+ãƒ–ãƒ©ã‚¦ã‚¶ã§FeliCaãƒªãƒ¼ãƒ€ãƒ¼ã«æ¥ç¶šã—ã€ã‚«ãƒ¼ãƒ‰æƒ…å ±ã‚’å–å¾—ã—ã¾ã™ã€‚
 
-## ƒfƒ‚
+## ãƒ‡ãƒ¢
 
-1. [‚±‚¿‚ç](https://github.com/tekka/ParallelHybridApp_card/raw/master/parallel_hybrid_app_native_card.zip)‚ÌƒAƒvƒŠ‚ğƒ_ƒEƒ“ƒ[ƒh‚·‚éB
- ([ƒ\[ƒX‚Í‚±‚¿‚ç](https://github.com/tekka/ParallelHybridApp_card/tree/master/native_app))
-2. PC‚ÉFeliCaƒŠ[ƒ_[‚ğÚ‘±‚µAƒ_ƒEƒ“ƒ[ƒh‚µ‚½ƒAƒvƒŠ‚ğ—§‚¿ã‚°‚éB
-3. [‚±‚Ìƒy[ƒW](https://tekka.github.io/ParallelHybridApp_card/)‚ğŠJ‚­B
+1. [ã“ã¡ã‚‰](https://github.com/tekka/ParallelHybridApp_card/raw/master/parallel_hybrid_app_native_card.zip)ã®ã‚¢ãƒ—ãƒªã‚’ãƒ€ã‚¦ãƒ³ãƒ­ãƒ¼ãƒ‰ã™ã‚‹ã€‚
+ ([ã‚½ãƒ¼ã‚¹ã¯ã“ã¡ã‚‰](https://github.com/tekka/ParallelHybridApp_card/tree/master/native_app))
+2. PCã«FeliCaãƒªãƒ¼ãƒ€ãƒ¼ã‚’æ¥ç¶šã—ã€ãƒ€ã‚¦ãƒ³ãƒ­ãƒ¼ãƒ‰ã—ãŸã‚¢ãƒ—ãƒªã‚’ç«‹ã¡ä¸Šã’ã‚‹ã€‚
+3. [ã“ã®ãƒšãƒ¼ã‚¸](https://tekka.github.io/ParallelHybridApp_card/)ã‚’é–‹ãã€‚
