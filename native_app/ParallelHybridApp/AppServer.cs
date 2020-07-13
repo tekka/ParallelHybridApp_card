@@ -1,5 +1,4 @@
 ﻿using Newtonsoft.Json;
-using SuperWebSocket;
 using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
@@ -10,6 +9,9 @@ using System.Net;
 using System.Configuration;
 using System.Text;
 using NfcPcSc;
+using SuperSocket.WebSocket;
+using System.Security.Authentication;
+using Microsoft.Win32;
 
 namespace ParallelHybridApp
 {
@@ -20,7 +22,7 @@ namespace ParallelHybridApp
         public static AppServer frm;
         public Dictionary<string, WebSocketSession> session_ary = new Dictionary<string, WebSocketSession>();
 
-        SuperWebSocket.WebSocketServer server_ssl;
+        SuperSocket.WebSocket.WebSocketServer server_ssl;
 
 
         bool _is_connect = false;
@@ -49,9 +51,9 @@ namespace ParallelHybridApp
                     Ip = "127.0.0.1",
                     MaxConnectionNumber = 100,
                     Mode = SuperSocket.SocketBase.SocketMode.Tcp,
-                    Name = "SuperWebSocket Sample Server",
+                    Name = "SuperSocket.WebSocket Sample Server",
                     MaxRequestLength = 1024 * 1024 * 10,
-                    Security = "tls",
+                    Security = GetEnabledTlsVersions(),
                     Certificate = new SuperSocket.SocketBase.Config.CertificateConfig
                     {
                         FilePath = ConfigurationManager.AppSettings["cert_file_path"],
@@ -136,11 +138,60 @@ namespace ParallelHybridApp
 
         }
 
+        public static string GetEnabledTlsVersions()
+        {
+            var enabledProtocols = SslProtocols.None;
+
+            try
+            {
+                var protocols = new[]
+                {
+                    (key: @"SYSTEM\CurrentControlSet\Control\SecurityProviders\SCHANNEL\Protocols\SSL 2.0\Server", protocol: SslProtocols.Ssl2),
+                    (key: @"SYSTEM\CurrentControlSet\Control\SecurityProviders\SCHANNEL\Protocols\SSL 3.0\Server", protocol: SslProtocols.Ssl3),
+                    (key: @"SYSTEM\CurrentControlSet\Control\SecurityProviders\SCHANNEL\Protocols\TLS 1.0\Server", protocol: SslProtocols.Tls),
+                    (key: @"SYSTEM\CurrentControlSet\Control\SecurityProviders\SCHANNEL\Protocols\TLS 1.1\Server", protocol: SslProtocols.Tls11),
+                    (key: @"SYSTEM\CurrentControlSet\Control\SecurityProviders\SCHANNEL\Protocols\TLS 1.2\Server", protocol: SslProtocols.Tls12)
+                };
+
+                using (var baseKey = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry64))
+                {
+                    foreach (var protocol in protocols)
+                    {
+                        using (var key = baseKey.OpenSubKey(protocol.key, false))
+                        {
+                            var value = key?.GetValue("DisabledByDefault") ?? 0;
+                            if (value is int disabled && disabled != 0)
+                            {
+                                continue;
+                            }
+
+                            value = key?.GetValue("Enabled") ?? 1;
+                            if (value is int enabled && enabled != 0)
+                            {
+                                enabledProtocols |= protocol.protocol;
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                // Log Error: "Failed to load enabled SSL protocols"
+            }
+
+            if (enabledProtocols == SslProtocols.None)
+            {
+                enabledProtocols = SslProtocols.Tls | SslProtocols.Tls11 | SslProtocols.Tls12;
+            }
+
+            return enabledProtocols.ToString();
+        }
+
         private void setup_server(ref WebSocketServer server, SuperSocket.SocketBase.Config.ServerConfig serverConfig)
         {
             var rootConfig = new SuperSocket.SocketBase.Config.RootConfig();
 
-            server = new SuperWebSocket.WebSocketServer();
+            server = new SuperSocket.WebSocket.WebSocketServer();
 
             //サーバーオブジェクト作成＆初期化
             server.Setup(rootConfig, serverConfig);
@@ -160,7 +211,7 @@ namespace ParallelHybridApp
 
 
         //接続
-        static void HandleServerNewSessionConnected(SuperWebSocket.WebSocketSession session)
+        static void HandleServerNewSessionConnected(SuperSocket.WebSocket.WebSocketSession session)
         {
             frm.session_ary.Add(session.SessionID, session);
 
@@ -172,7 +223,7 @@ namespace ParallelHybridApp
         }
 
         //メッセージ受信
-        static void HandleServerNewMessageReceived(SuperWebSocket.WebSocketSession session,
+        static void HandleServerNewMessageReceived(SuperSocket.WebSocket.WebSocketSession session,
                                                     string e)
         {
             frm.Invoke((MethodInvoker)delegate ()
@@ -193,7 +244,7 @@ namespace ParallelHybridApp
         }
 
         //切断
-        static void HandleServerSessionClosed(SuperWebSocket.WebSocketSession session,
+        static void HandleServerSessionClosed(SuperSocket.WebSocket.WebSocketSession session,
                                                     SuperSocket.SocketBase.CloseReason e)
         {
             if (frm != null)
