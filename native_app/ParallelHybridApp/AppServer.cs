@@ -72,7 +72,7 @@ namespace ParallelHybridApp
                     }
                     else
                     {
-                        frm.add_log(DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss"), string.Format("SCardEstablishContext Error.\nErrorCode.%08X\n", result));
+                        frm.add_log(DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss"), string.Format("SCardEstablishContext Error.\nErrorCode.{0:X}\n", result));
                     }
                 }
                 else
@@ -87,7 +87,7 @@ namespace ParallelHybridApp
 
                         if (result != NfcConstant.SCARD_S_SUCCESS)
                         {
-                            throw new ApplicationException("リーダーの情報が取得できません。");
+                            throw new ApplicationException("リーダーの情報が取得できません。\nErrorCode: " + String.Format("{0:X}", result));
                         }
 
                         byte[] mszReaders = new byte[pcchReaders * 2];
@@ -96,7 +96,7 @@ namespace ParallelHybridApp
 
                         if (result != NfcConstant.SCARD_S_SUCCESS)
                         {
-                            throw new ApplicationException("リーダーの情報が取得できません。");
+                            throw new ApplicationException("リーダーの情報が取得できません。\nErrorCode: " + String.Format("{0:X}", result));
                         }
 
                         UnicodeEncoding unicodeEncoding = new UnicodeEncoding();
