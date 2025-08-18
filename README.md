@@ -1,6 +1,9 @@
 パラレルハイブリッドアプリ FeliCaリーダー読込
 ===
 
+役に立ったら ⭐ をお願いします  
+[![GitHub Repo stars](https://img.shields.io/github/stars/tekka/ParallelHybridApp_card?style=social)](https://github.com/tekka/ParallelHybridApp_card/stargazers)
+
 ## これは何？
 
 ブラウザでFeliCaリーダーに接続し、カード情報を取得します。
